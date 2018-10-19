@@ -3,30 +3,29 @@ package pagerank;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Counter;
-import org.apache.hadoop.mapreduce.CounterGroup;
-import org.apache.hadoop.mapreduce.Counters;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class Graph {
+public class Rank {
 
-  private int mCount = 0;
+  public Rank() {}
 
-  public Graph() {}
-
-  public void Graph(int R, String input, String output) throws Exception {
+  public void Rank(int R, double beta, int N, String input, String output) throws Exception {
+    // param = (1 - beta) / N
+    double param = (1. - beta) / N;
     Configuration conf = new Configuration();
+    conf.set("beta", Double.toString(beta));
+    conf.set("param", Double.toString(param));
 
-    Job job = Job.getInstance(conf, "Graph");
-    job.setJarByClass(Graph.class);
+    Job job = Job.getInstance(conf, "Rank");
+    job.setJarByClass(Rank.class);
 
     job.setInputFormatClass(KeyValueTextInputFormat.class);
 
-    job.setMapperClass(GraphMapper.class);
-    job.setReducerClass(GraphReducer.class);
+    job.setMapperClass(RankMapper.class);
+    job.setReducerClass(RankReducer.class);
 
     job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(Text.class);
@@ -39,12 +38,5 @@ public class Graph {
     FileOutputFormat.setOutputPath(job, new Path(output));
 
     job.waitForCompletion(true);
-
-    CounterGroup counters = job.getCounters().getGroup("Nodes");
-    for (Counter counter : counters) mCount += counter.getValue();
-  }
-
-  public int getN() {
-    return mCount;
   }
 }
