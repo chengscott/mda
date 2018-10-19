@@ -25,6 +25,7 @@ public class Rank {
     job.setInputFormatClass(KeyValueTextInputFormat.class);
 
     job.setMapperClass(RankMapper.class);
+    // job.setCombinerClass(RankCombiner.class);
     job.setReducerClass(RankReducer.class);
 
     job.setMapOutputKeyClass(Text.class);
