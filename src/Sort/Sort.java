@@ -6,36 +6,36 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class Sort {
-    
-    public Sort() {}
 
-    public void Sort(String input, String output) throws Exception {
-        Configuration conf = new Configuration();
+  public Sort() {}
 
-        Job job = Job.getInstance(conf, "Sort");
-        job.setJarByClass(Sort.class);
+  public void Sort(String input, String output) throws Exception {
+    Configuration conf = new Configuration();
 
-        job.setInputFormatClass(KeyValueTextInputFormat.class);
+    Job job = Job.getInstance(conf, "Sort");
+    job.setJarByClass(Sort.class);
 
-        job.setMapperClass(SortMapper.class);
-        job.setSortComparatorClass(SortKeyComparator.class);
-        job.setGroupingComparatorClass(SortGroupComparator.class);
-        job.setReducerClass(SortReducer.class);
+    job.setInputFormatClass(KeyValueTextInputFormat.class);
 
-        job.setMapOutputKeyClass(SortPair.class);
-        job.setMapOutputValueClass(DoubleWritable.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(DoubleWritable.class);
+    job.setMapperClass(SortMapper.class);
+    job.setSortComparatorClass(SortKeyComparator.class);
+    job.setGroupingComparatorClass(SortGroupComparator.class);
+    job.setReducerClass(SortReducer.class);
 
-        job.setNumReduceTasks(1);
+    job.setMapOutputKeyClass(SortPair.class);
+    job.setMapOutputValueClass(DoubleWritable.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(DoubleWritable.class);
 
-        FileInputFormat.addInputPath(job, new Path(input));
-        FileOutputFormat.setOutputPath(job, new Path(output));
+    job.setNumReduceTasks(1);
 
-        job.waitForCompletion(true);
-    }
+    FileInputFormat.addInputPath(job, new Path(input));
+    FileOutputFormat.setOutputPath(job, new Path(output));
+
+    job.waitForCompletion(true);
+  }
 }

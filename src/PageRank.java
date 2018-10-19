@@ -3,11 +3,11 @@ package pagerank;
 public class PageRank {
 
   public static void main(String[] args) throws Exception {
-    final int R = 1, iter = 10;
+    final int R = 1, iter = 1;
     final double beta = 0.8;
     // final String input = "/user/chengscott/data/p2p-Gnutella04.txt";
     final String input = "/user/chengscott/data/test.txt";
-    final String path = "/user/chengscott/test";
+    final String path = "/user/chengscott/test2";
     final String rankPath = path + "/iter/", tmpPath = path + "/tmp/", sumPath = path + "/sum/";
 
     // Parse adjacency matrix
@@ -23,8 +23,9 @@ public class PageRank {
     Add initJob = new Add();
     initJob.Add(R, 1. / N, path + "/parse", rankPath + "0");
 
+    double rate = N;
     int i;
-    for (i = 1; i <= iter; ++i) {
+    for (i = 1; iter == -1 ? !(rate < 0.001) : i <= iter; ++i) {
       String prevRank = rankPath + Integer.toString(i - 1),
           tmpRank = tmpPath + Integer.toString(i),
           curRank = rankPath + Integer.toString(i),
