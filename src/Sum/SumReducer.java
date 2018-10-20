@@ -12,6 +12,6 @@ public class SumReducer
       throws IOException, InterruptedException {
     double ret = 0;
     for (DoubleWritable val : values) ret += Double.parseDouble(val.toString());
-    context.write(NullWritable.get(), new DoubleWritable(ret));
+    context.write(key, new DoubleWritable(ret));
   }
 }

@@ -23,7 +23,9 @@ public class RankReducer extends Reducer<Text, Text, Text, Text> {
     // pr = beta * sum(ri / di) + param
     double pr = beta * sum + param;
     String[] links = link.split("\t", 2);
+    double eps = pr - Double.parseDouble(links[0]);
     links[0] = Double.toString(pr);
     context.write(key, new Text(String.join("\t", links)));
+    context.write(new Text("eps" + key.toString()), new Text(Double.toString(eps)));
   }
 }

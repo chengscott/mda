@@ -6,6 +6,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class RankMapper extends Mapper<Text, Text, Text, Text> {
   public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+    if (key.toString().startsWith("eps")) return;
     String[] links = value.toString().split("\t");
     int deg = links.length - 1;
     if (deg > 0) {

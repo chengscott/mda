@@ -20,8 +20,9 @@ public class Sum {
 
   public Sum() {}
 
-  public void Sum(int R, String input, String output) throws Exception {
+  public void Sum(String key, int R, String input, String output) throws Exception {
     Configuration conf = new Configuration();
+    conf.set("key", key);
 
     Job job = Job.getInstance(conf, "Sum");
     job.setJarByClass(Sum.class);

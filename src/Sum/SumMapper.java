@@ -9,7 +9,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class SumMapper extends Mapper<Text, Text, NullWritable, DoubleWritable> {
 
   public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
-    double pr = Double.parseDouble(value.toString().split("\t", 2)[0]);
-    context.write(NullWritable.get(), new DoubleWritable(pr));
+    boolean isEps = context.getConfiguration().get("key").equals("eps"),
+        isKeyEps = key.toString().startsWith("eps");
+    double val = Double.parseDouble(value.toString().split("\t", 2)[0]);
+    if (isEps && isKeyEps) context.write(NullWritable.get(), new DoubleWritable(Math.abs(val)));
+    else if (!isEps && !isKeyEps) context.write(NullWritable.get(), new DoubleWritable(val));
   }
 }
