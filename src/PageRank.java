@@ -3,12 +3,12 @@ package pagerank;
 public class PageRank {
 
   public static void main(String[] args) throws Exception {
-    final int R = 1, iter = -1;
+    final int iter = (args.length >= 3 ? Integer.parseInt(args[2]) : 20);
+    final int R = 1;
     final double beta = 0.8;
-    final String input = "/user/chengscott/data/p2p-Gnutella04.txt";
-    // final String input = "/user/chengscott/data/test.txt";
-    final String path = "/user/chengscott/p2p-20";
-    final String rankPath = path + "/iter/",
+    final String input = args[0],
+        path = args[1],
+        rankPath = path + "/iter/",
         tmpPath = path + "/tmp/",
         sumPath = path + "/sum/",
         convPath = path + "/conv/";
