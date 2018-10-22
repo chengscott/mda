@@ -8,21 +8,22 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class MinHashing {
+public class Hashing {
 
-  public MinHashing() {}
+  public Hashing() {}
 
-  public void MinHashing(int K, int R, String input, String output) throws Exception {
+  public void Hashing(int K, int r, int R, String input, String output) throws Exception {
     Configuration conf = new Configuration();
-    conf.set("K", Integer.toString(K));
+    conf.setInt("K", K);
+    conf.setInt("r", r);
 
-    Job job = Job.getInstance(conf, "MinHashing");
-    job.setJarByClass(MinHashing.class);
-    
+    Job job = Job.getInstance(conf, "Hashing");
+    job.setJarByClass(Hashing.class);
+
     job.setInputFormatClass(KeyValueTextInputFormat.class);
 
-    job.setMapperClass(MinHashingMapper.class);
-    //job.setReducerClass(MinHashingReducer.class);
+    job.setMapperClass(HashingMapper.class);
+    job.setReducerClass(HashingReducer.class);
 
     job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(Text.class);
