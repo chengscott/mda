@@ -3,19 +3,24 @@ package lsh;
 public class LSH {
   public static void main(String[] args) throws Exception {
     final int R = 1;
-    final String input = args[0], path = args[1];
+    final String input = args[0],
+        path = args[1],
+        shinglingPath = path + "/shingling",
+        hashingPath = path + "/hashing",
+        jaccardPath = path + "/jaccard";
 
     // Shingling
-    // Shingling sJob = new Shingling();
-    // sJob.Shingling(R, input, path + "/shingling");
+    Shingling shinglingJob = new Shingling();
+    shinglingJob.Shingling(R, input, shinglingPath);
 
     // Min Hashing & LSH
     final int K = 100, r = 5;
-    Hashing hashJob = new Hashing();
-    hashJob.Hashing(K, r, R, path + "/shingling", path + "/hashing");
+    Hashing hashingJob = new Hashing();
+    hashingJob.Hashing(K, r, R, shinglingPath, hashingPath);
 
-    //Jaccard jJob = new Jaccard();
-    //jJob.Jaccard(R, path + "/hashing", path + "/jaccard");
+    // Jaccard Similarity
+    Jaccard jJob = new Jaccard();
+    jJob.Jaccard(R, hashingPath, jaccardPath);
 
     System.exit(0);
   }
