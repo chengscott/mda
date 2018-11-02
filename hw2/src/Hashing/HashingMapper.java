@@ -41,14 +41,13 @@ public class HashingMapper extends Mapper<Text, Text, Text, Text> {
       sigs[k] = Integer.toString(sig);
     }
     // LSH
-    String signature = key.toString(); // + "_" + String.join("_", sigs);
+    String signature = key.toString() + "_" + String.join("_", sigs);
     Text val = new Text(signature);
     for (int b = 0; b < mBands; ++b) {
       StringJoiner hash = new StringJoiner("_");
       hash.add(Integer.toString(b));
       for (int r = 0; r < mR; ++r) hash.add(sigs[b * mR + r]);
-      int lsh = hash.toString().hashCode();
-      context.write(new Text(Integer.toString(lsh)), val);
+      context.write(new Text(hash.toString()), val);
     }
   }
 

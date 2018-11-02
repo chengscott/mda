@@ -20,7 +20,6 @@ public class Jaccard {
 
     job.setInputFormatClass(KeyValueTextInputFormat.class);
 
-    // job.setMapperClass(JaccardMapper.class);
     job.setReducerClass(JaccardReducer.class);
 
     job.setMapOutputKeyClass(Text.class);
