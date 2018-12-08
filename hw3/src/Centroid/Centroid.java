@@ -28,8 +28,8 @@ public class Centroid {
       throws Exception {
     Configuration conf = new Configuration();
     conf.set("centroid", centroid);
-    if (distance == "manhattan") conf.setInt("norm", 1);
-    else if (distance == "euclidean") conf.setInt("norm", 2);
+    if (distance.equals("manhattan")) conf.setInt("norm", 1);
+    else if (distance.equals("euclidean")) conf.setInt("norm", 2);
 
     Job job = Job.getInstance(conf, "Centroid");
     job.setJarByClass(Centroid.class);
